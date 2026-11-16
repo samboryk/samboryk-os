@@ -18,8 +18,20 @@ kernel_pkgs | xargs -r apt-mark hold >/dev/null
 log "32-бітна архітектура для Steam і Wine"
 dpkg --add-architecture i386
 
+# В образі Kubuntu є джерело пакетів з самого диска (file:/cdrom). Під час
+# збирання диска немає, тож помилку саме цього джерела пропускаємо,
+# а будь-яку іншу вважаємо справжньою.
 log "Оновлюю списки пакетів"
-apt-get update -q
+if ! apt-get update -q > /tmp/apt-update.log 2>&1; then
+    grep -E '^(E|Err):' /tmp/apt-update.log | grep -v -i 'cdrom' > /tmp/apt-errors.log || true
+    if [ -s /tmp/apt-errors.log ]; then
+        cat /tmp/apt-update.log
+        echo "apt-get update завершився з помилками:" >&2
+        cat /tmp/apt-errors.log >&2
+        exit 1
+    fi
+    log "джерело file:/cdrom недоступне під час збирання — пропускаю"
+fi
 
 # Steam питає згоду з ліцензією — відповідаємо наперед
 echo "steam steam/question select I AGREE" | debconf-set-selections
