@@ -9,6 +9,8 @@ on:
         options: [alpha, beta, stable]
         default: alpha
   push:
+    # Новий образ: git push origin main:release
+    branches: [release]
     tags: ['v*']
 
 permissions:
