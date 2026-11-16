@@ -1,0 +1,82 @@
+name: Оновлення
+
+# Публікує пакети Samboryk OS у репозиторій оновлень на GitHub Pages.
+# Встановлені системи бачать нову версію в Discover.
+
+on:
+  workflow_dispatch:
+    inputs:
+      channel:
+        description: Канал, у який публікувати
+        type: choice
+        options: [alpha, beta, stable]
+        default: alpha
+  push:
+    branches: [main]
+    paths: ['VERSION']
+
+permissions:
+  contents: write
+
+concurrency: publish-updates
+
+jobs:
+  publish:
+    runs-on: ubuntu-24.04
+    env:
+      CHANNEL: ${{ inputs.channel || 'alpha' }}
+      REPO_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/apt
+      HOME_URL: https://github.com/${{ github.repository }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Ключ підпису
+        env:
+          KEY: ${{ secrets.SAMBORYK_GPG_PRIVATE_KEY }}
+        run: |
+          if [ ! -f keys/samboryk-archive.asc ]; then
+            echo "::error::Немає keys/samboryk-archive.asc. Створіть ключ: tools/make-key.sh (див. README)."
+            exit 1
+          fi
+          if [ -z "$KEY" ]; then
+            echo "::error::Немає секрету SAMBORYK_GPG_PRIVATE_KEY (див. README)."
+            exit 1
+          fi
+          printf '%s\n' "$KEY" | gpg --batch --import
+          ID=$(gpg --list-secret-keys --with-colons | awk -F: '/^sec/ {print $5; exit}')
+          if ! gpg --with-colons --show-keys keys/samboryk-archive.asc | grep -q "$ID"; then
+            echo "::error::Секретний ключ не відповідає keys/samboryk-archive.asc."
+            exit 1
+          fi
+          echo "GPG_KEY_ID=$ID" >> "$GITHUB_ENV"
+
+      - name: Інструменти
+        run: sudo apt-get install -y -q apt-utils
+
+      - name: Пакети Samboryk
+        run: tools/build-debs.sh
+
+      - name: Отримати поточний сайт
+        run: |
+          if git fetch -q origin gh-pages 2>/dev/null; then
+            git worktree add -B gh-pages public origin/gh-pages
+          else
+            git worktree add --orphan -b gh-pages public
+          fi
+
+      - name: Оновити репозиторій
+        run: tools/build-repo.sh public
+
+      - name: Опублікувати
+        run: |
+          cd public
+          git config user.name "Samboryk OS"
+          git config user.email "noreply@samboryk.invalid"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "Змін немає."
+            exit 0
+          fi
+          git commit -q -m "Оновлення $(tr -d '[:space:]' < ../VERSION) ($CHANNEL)"
+          git push -q origin gh-pages
+          echo "Опубліковано: $REPO_URL (канал $CHANNEL)"

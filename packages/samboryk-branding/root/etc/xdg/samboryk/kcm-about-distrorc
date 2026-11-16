@@ -1,0 +1,5 @@
+[General]
+Name=Samboryk OS
+LogoPath=/usr/share/samboryk/logo/samboryk-logo-256.png
+Website=@HOME_URL@
+Variant=Канал оновлень: @CHANNEL@

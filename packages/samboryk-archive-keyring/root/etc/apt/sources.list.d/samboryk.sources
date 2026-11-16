@@ -1,0 +1,5 @@
+Types: deb
+URIs: @REPO_URL@
+Suites: @CHANNEL@
+Components: main
+Signed-By: /usr/share/keyrings/samboryk-archive-keyring.gpg

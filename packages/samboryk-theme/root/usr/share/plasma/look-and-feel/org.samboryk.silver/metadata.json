@@ -1,0 +1,13 @@
+{
+    "KPackageStructure": "Plasma/LookAndFeel",
+    "KPlugin": {
+        "Authors": [ { "Name": "Samboryk OS" } ],
+        "Description": "Світла скляна тема Samboryk OS",
+        "Description[uk]": "Світла скляна тема Samboryk OS",
+        "Id": "org.samboryk.silver",
+        "License": "GPL-2.0-or-later",
+        "Name": "Samboryk Silver",
+        "Version": "@VERSION@"
+    },
+    "X-Plasma-APIVersion": "2"
+}

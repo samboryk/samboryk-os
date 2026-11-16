@@ -1,0 +1,71 @@
+// Екран завантаження Samboryk OS: лого, назва й три точки, що «дихають».
+
+Window.SetBackgroundTopColor(0.07, 0.075, 0.09);
+Window.SetBackgroundBottomColor(0.02, 0.02, 0.025);
+
+cx = Window.GetX() + Window.GetWidth() / 2;
+cy = Window.GetY() + Window.GetHeight() / 2;
+
+logo_image = Image("logo.png");
+logo_sprite = Sprite(logo_image);
+logo_y = cy - logo_image.GetHeight() / 2 - 50;
+logo_sprite.SetPosition(cx - logo_image.GetWidth() / 2, logo_y, 10);
+
+title_image = Image.Text("Samboryk OS", 0.95, 0.96, 0.97, 1, "Sans 20");
+title_sprite = Sprite(title_image);
+title_y = logo_y + logo_image.GetHeight() + 22;
+title_sprite.SetPosition(cx - title_image.GetWidth() / 2, title_y, 10);
+
+dot_image = Image("dot.png");
+dots_y = title_y + title_image.GetHeight() + 34;
+for (i = 0; i < 3; i++) {
+    dots[i] = Sprite(dot_image);
+    dots[i].SetPosition(cx - 34 + i * 26, dots_y, 10);
+    dots[i].SetOpacity(0.3);
+}
+
+field_image = Image("field.png");
+field_sprite = Sprite(field_image);
+field_sprite.SetPosition(cx - field_image.GetWidth() / 2, dots_y - 6, 20);
+field_sprite.SetOpacity(0);
+
+tick = 0;
+fun refresh_callback() {
+    global.tick = global.tick + 1;
+    for (i = 0; i < 3; i++) {
+        phase = global.tick / 14 - i * 0.7;
+        dots[i].SetOpacity(0.25 + 0.75 * Math.Abs(Math.Sin(phase)));
+    }
+}
+Plymouth.SetRefreshFunction(refresh_callback);
+
+// Пароль для зашифрованого диска
+fun display_password_callback(prompt, bullets) {
+    for (i = 0; i < 3; i++) dots[i].SetOpacity(0);
+    field_sprite.SetOpacity(1);
+
+    global.prompt_image = Image.Text(prompt, 0.9, 0.92, 0.94, 1, "Sans 12");
+    global.prompt_sprite = Sprite(global.prompt_image);
+    global.prompt_sprite.SetPosition(cx - global.prompt_image.GetWidth() / 2, dots_y - 40, 20);
+
+    text = "";
+    for (i = 0; i < bullets; i++) text = text + "●";
+    global.bullet_image = Image.Text(text, 1, 1, 1, 1, "Sans 14");
+    global.bullet_sprite = Sprite(global.bullet_image);
+    global.bullet_sprite.SetPosition(cx - global.bullet_image.GetWidth() / 2, dots_y + 6, 30);
+}
+Plymouth.SetDisplayPasswordFunction(display_password_callback);
+
+fun display_normal_callback() {
+    field_sprite.SetOpacity(0);
+    if (global.prompt_sprite) global.prompt_sprite.SetOpacity(0);
+    if (global.bullet_sprite) global.bullet_sprite.SetOpacity(0);
+}
+Plymouth.SetDisplayNormalFunction(display_normal_callback);
+
+fun message_callback(text) {
+    global.message_image = Image.Text(text, 0.7, 0.72, 0.76, 1, "Sans 10");
+    global.message_sprite = Sprite(global.message_image);
+    global.message_sprite.SetPosition(cx - global.message_image.GetWidth() / 2, Window.GetY() + Window.GetHeight() - 60, 10);
+}
+Plymouth.SetMessageFunction(message_callback);

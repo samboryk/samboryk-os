@@ -1,0 +1,11 @@
+[KDE]
+LookAndFeelPackage=org.samboryk.silver
+DefaultLightLookAndFeel=org.samboryk.silver
+DefaultDarkLookAndFeel=org.samboryk.graphite
+widgetStyle=Breeze
+
+[General]
+ColorScheme=SamborykSilver
+
+[Icons]
+Theme=WhiteSur

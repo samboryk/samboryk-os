@@ -1,0 +1,11 @@
+Package: samboryk-theme
+Version: @VERSION@
+Architecture: all
+Maintainer: Samboryk OS <noreply@samboryk.invalid>
+Priority: optional
+Section: x11
+Depends: samboryk-branding (= @VERSION@)
+Recommends: samboryk-icons
+Description: Samboryk OS desktop theme
+ Silver (light) and Graphite (dark) global themes, color schemes,
+ wallpapers, login splash and default panel layout for KDE Plasma.

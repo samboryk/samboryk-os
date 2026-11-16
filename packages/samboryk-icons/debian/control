@@ -1,0 +1,9 @@
+Package: samboryk-icons
+Version: @VERSION@
+Architecture: all
+Maintainer: Samboryk OS <noreply@samboryk.invalid>
+Priority: optional
+Section: x11
+Description: Icon theme for Samboryk OS
+ WhiteSur icon theme by Vince Liuice (GPL-3.0), packaged for Samboryk OS.
+ Upstream: https://github.com/vinceliuice/WhiteSur-icon-theme

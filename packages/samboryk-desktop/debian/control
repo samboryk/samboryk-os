@@ -1,0 +1,12 @@
+Package: samboryk-desktop
+Version: @VERSION@
+Architecture: all
+Maintainer: Samboryk OS <noreply@samboryk.invalid>
+Priority: optional
+Section: metapackages
+Depends: samboryk-branding (= @VERSION@), samboryk-theme (= @VERSION@), samboryk-icons (= @VERSION@)
+Recommends: samboryk-archive-keyring, kdeconnect, timeshift, gamemode, mangohud, steam-installer, lutris, wine, plasma-discover, plasma-discover-notifier
+Description: Samboryk OS desktop
+ Pulls in everything that makes up Samboryk OS: branding, theme, icons,
+ update channel, phone integration, system snapshots and gaming tools
+ (Steam with Proton, Wine, Lutris, GameMode, MangoHud).

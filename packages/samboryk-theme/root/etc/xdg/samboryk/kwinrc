@@ -1,0 +1,14 @@
+[org.kde.kdecoration2]
+library=org.kde.breeze
+theme=Breeze
+ButtonsOnLeft=XIA
+ButtonsOnRight=
+
+[Plugins]
+blurEnabled=true
+contrastEnabled=true
+wobblywindowsEnabled=false
+
+[Effect-blur]
+BlurStrength=12
+NoiseStrength=2

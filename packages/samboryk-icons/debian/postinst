@@ -1,0 +1,8 @@
+#!/bin/sh
+set -e
+if [ "$1" = configure ] && command -v gtk-update-icon-cache >/dev/null; then
+    for t in WhiteSur WhiteSur-light WhiteSur-dark; do
+        [ -d "/usr/share/icons/$t" ] && gtk-update-icon-cache -q -f "/usr/share/icons/$t" || true
+    done
+fi
+exit 0

@@ -1,0 +1,33 @@
+#!/bin/sh
+# Перемикає канал оновлень Samboryk OS: alpha, beta або stable.
+set -e
+F=/etc/apt/sources.list.d/samboryk.sources
+
+if [ ! -f "$F" ]; then
+    echo "Канал оновлень не налаштований: немає $F" >&2
+    exit 1
+fi
+
+case "${1:-status}" in
+    status)
+        printf 'Канал оновлень: %s\n' "$(sed -n 's/^Suites:[[:space:]]*//p' "$F")"
+        exit 0 ;;
+    alpha|beta|stable) ;;
+    *)
+        echo "Використання: samboryk-channel [alpha|beta|stable|status]" >&2
+        exit 1 ;;
+esac
+
+if [ "$(id -u)" -ne 0 ]; then
+    exec sudo "$0" "$@"
+fi
+
+OLD="$(sed -n 's/^Suites:[[:space:]]*//p' "$F")"
+sed -i "s/^Suites:.*/Suites: $1/" "$F"
+if ! apt-get update -o APT::Update::Error-Mode=any >/dev/null 2>&1; then
+    sed -i "s/^Suites:.*/Suites: $OLD/" "$F"
+    apt-get update >/dev/null 2>&1 || true
+    echo "Канал $1 ще не опубліковано або немає зв'язку. Лишаю канал $OLD." >&2
+    exit 1
+fi
+echo "Готово: канал змінено на $1. Нові версії з'являться в Discover."

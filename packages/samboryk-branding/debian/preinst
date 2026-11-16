@@ -1,0 +1,8 @@
+#!/bin/sh
+set -e
+# Ubuntu-шний os-release відводимо вбік, на його місце ставимо свій.
+if [ "$1" = install ] || [ "$1" = upgrade ]; then
+    dpkg-divert --package samboryk-branding --add --rename \
+        --divert /usr/lib/os-release.ubuntu /usr/lib/os-release
+fi
+exit 0

@@ -1,0 +1,29 @@
+#!/bin/sh
+set -e
+
+if [ "$1" = configure ]; then
+    # Екран завантаження
+    if [ -f /usr/share/plymouth/themes/samboryk/samboryk.plymouth ] && command -v update-alternatives >/dev/null; then
+        update-alternatives --install /usr/share/plymouth/themes/default.plymouth default.plymouth \
+            /usr/share/plymouth/themes/samboryk/samboryk.plymouth 200
+        update-alternatives --set default.plymouth /usr/share/plymouth/themes/samboryk/samboryk.plymouth || true
+        if [ -z "${SAMBORYK_SKIP_INITRAMFS:-}" ] && command -v update-initramfs >/dev/null; then
+            update-initramfs -u || true
+        fi
+    fi
+
+    # Тема екрана входу: копія Breeze зі шпалерами Samboryk
+    if [ -d /usr/share/sddm/themes/breeze ]; then
+        rm -rf /usr/share/sddm/themes/samboryk
+        cp -a /usr/share/sddm/themes/breeze /usr/share/sddm/themes/samboryk
+        cp /usr/share/samboryk/sddm/theme.conf.user /usr/share/sddm/themes/samboryk/theme.conf.user
+        if [ -f /usr/share/sddm/themes/samboryk/metadata.desktop ]; then
+            sed -i 's/^Name=.*/Name=Samboryk OS/' /usr/share/sddm/themes/samboryk/metadata.desktop
+        fi
+    fi
+
+    if command -v gtk-update-icon-cache >/dev/null && [ -d /usr/share/icons/hicolor ]; then
+        gtk-update-icon-cache -q -f /usr/share/icons/hicolor || true
+    fi
+fi
+exit 0

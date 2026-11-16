@@ -1,0 +1,12 @@
+#!/bin/sh
+set -e
+if [ "$1" = remove ] || [ "$1" = purge ] || [ "$1" = abort-install ]; then
+    dpkg-divert --package samboryk-branding --remove --rename \
+        --divert /usr/lib/os-release.ubuntu /usr/lib/os-release || true
+    rm -rf /usr/share/sddm/themes/samboryk
+    if command -v update-alternatives >/dev/null; then
+        update-alternatives --remove default.plymouth \
+            /usr/share/plymouth/themes/samboryk/samboryk.plymouth || true
+    fi
+fi
+exit 0

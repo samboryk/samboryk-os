@@ -1,0 +1,13 @@
+{
+    "KPackageStructure": "Plasma/LookAndFeel",
+    "KPlugin": {
+        "Authors": [ { "Name": "Samboryk OS" } ],
+        "Description": "Темна скляна тема Samboryk OS",
+        "Description[uk]": "Темна скляна тема Samboryk OS",
+        "Id": "org.samboryk.graphite",
+        "License": "GPL-2.0-or-later",
+        "Name": "Samboryk Graphite",
+        "Version": "@VERSION@"
+    },
+    "X-Plasma-APIVersion": "2"
+}

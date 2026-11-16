@@ -1,0 +1,10 @@
+Package: samboryk-branding
+Version: @VERSION@
+Architecture: all
+Maintainer: Samboryk OS <noreply@samboryk.invalid>
+Priority: optional
+Section: misc
+Depends: base-files
+Recommends: plymouth
+Description: Samboryk OS branding
+ Name, logo, boot screen and system information for Samboryk OS.

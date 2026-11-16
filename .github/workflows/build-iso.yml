@@ -1,0 +1,94 @@
+name: Збірка ISO
+
+on:
+  workflow_dispatch:
+    inputs:
+      channel:
+        description: Канал оновлень, вшитий в образ
+        type: choice
+        options: [alpha, beta, stable]
+        default: alpha
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+
+jobs:
+  iso:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 300
+    env:
+      CHANNEL: ${{ inputs.channel || 'alpha' }}
+      REPO_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/apt
+      HOME_URL: https://github.com/${{ github.repository }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Звільнити місце на диску
+        run: |
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc \
+            /opt/hostedtoolcache/CodeQL /usr/local/share/boost /usr/local/.ghcup
+          sudo docker image prune -af >/dev/null 2>&1 || true
+          df -h / /mnt
+
+      - name: Інструменти
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -y -q xorriso squashfs-tools
+
+      - name: Перевірити ключ оновлень
+        run: |
+          if [ ! -f keys/samboryk-archive.asc ]; then
+            echo "::warning::Немає keys/samboryk-archive.asc — образ збереться без каналу оновлень. Див. README."
+          fi
+
+      - name: Пакети Samboryk
+        run: tools/build-debs.sh
+
+      - name: Збірка ISO
+        run: |
+          free_mnt=$(df -Pk /mnt | awk 'NR==2 {print $4}')
+          if [ "$free_mnt" -gt $((30 * 1024 * 1024)) ]; then W=/mnt/samboryk; else W="$PWD/work"; fi
+          sudo mkdir -p "$W"
+          sudo -E WORK="$W" OUT="$PWD/out" iso/build-iso.sh
+
+      - name: Розбити ISO на частини (GitHub приймає файли до 2 ГБ)
+        run: |
+          cd out
+          ISO=$(ls samboryk-os-*.iso)
+          sudo chown "$USER" "$ISO" "$ISO.sha256"
+          split -b 1900M -d -a 1 "$ISO" "$ISO.part"
+          rm "$ISO"
+          ls -la
+
+      - name: Опублікувати реліз
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          V=$(tr -d '[:space:]' < VERSION)
+          if [ "$GITHUB_REF_TYPE" = tag ]; then
+            TAG="$GITHUB_REF_NAME"
+          else
+            TAG="v${V//\~/-}-$(date -u +%Y%m%d-%H%M)"
+          fi
+          ISO=$(ls out/*.iso.sha256 | sed 's/\.sha256$//' | xargs -n1 basename)
+          PARTS=$(ls out/*.iso.part* | xargs -n1 basename | sort | sed ':a;N;$!ba;s/\n/ + /g')
+          cat > notes.md <<EOF
+          Samboryk OS $V, канал **$CHANNEL**. Тестова версія: пробуйте у віртуальній машині.
+
+          ### Як зібрати образ із частин
+          Завантажте всі файли \`.part*\` в одну папку.
+
+          **Windows** (командний рядок у цій папці):
+          \`\`\`
+          copy /b $PARTS $ISO
+          certutil -hashfile $ISO SHA256
+          \`\`\`
+
+          **Linux:** \`cat $ISO.part* > $ISO && sha256sum -c $ISO.sha256\`
+
+          Контрольна сума має збігатися з файлом \`$ISO.sha256\`.
+          EOF
+          gh release create "$TAG" --prerelease --title "Samboryk OS $V" --notes-file notes.md \
+            out/*.iso.part* out/*.iso.sha256 out/debs/*.deb

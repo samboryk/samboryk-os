@@ -1,0 +1,8 @@
+[Plymouth Theme]
+Name=Samboryk OS
+Description=Екран завантаження Samboryk OS
+ModuleName=script
+
+[script]
+ImageDir=/usr/share/plymouth/themes/samboryk
+ScriptFile=/usr/share/plymouth/themes/samboryk/samboryk.script

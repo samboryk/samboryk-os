@@ -1,0 +1,8 @@
+Package: samboryk-archive-keyring
+Version: @VERSION@
+Architecture: all
+Maintainer: Samboryk OS <noreply@samboryk.invalid>
+Priority: optional
+Section: misc
+Description: Update channel of Samboryk OS
+ GPG key and APT source of the Samboryk OS update repository.

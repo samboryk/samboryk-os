@@ -1,0 +1,7 @@
+[Common]
+ShadowSize=ShadowVeryLarge
+OutlineIntensity=OutlineOff
+
+[Windows]
+DrawBackgroundGradient=false
+DrawTitleBarSeparator=false

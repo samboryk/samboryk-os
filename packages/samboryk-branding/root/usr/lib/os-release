@@ -1,0 +1,12 @@
+PRETTY_NAME="Samboryk OS @PRETTY_VERSION@"
+NAME="Samboryk OS"
+VERSION_ID="@VERSION_ID@"
+VERSION="@PRETTY_VERSION@ (на базі Ubuntu 26.04 LTS)"
+VERSION_CODENAME=resolute
+ID=samboryk
+ID_LIKE="ubuntu debian"
+HOME_URL="@HOME_URL@"
+SUPPORT_URL="@HOME_URL@/issues"
+BUG_REPORT_URL="@HOME_URL@/issues"
+UBUNTU_CODENAME=resolute
+LOGO=samboryk-logo

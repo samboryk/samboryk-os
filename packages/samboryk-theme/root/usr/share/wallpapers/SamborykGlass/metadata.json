@@ -1,0 +1,8 @@
+{
+    "KPlugin": {
+        "Authors": [ { "Name": "Samboryk OS" } ],
+        "Id": "SamborykGlass",
+        "License": "CC-BY-SA-4.0",
+        "Name": "Samboryk Glass"
+    }
+}
