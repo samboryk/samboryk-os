@@ -1,0 +1,20 @@
+Architectures: amd64
+Codename: alpha
+Components: main
+Date: Mon, 16 Nov 2026 21:40:44 +0000
+Description: Samboryk OS updates (alpha)
+Label: Samboryk OS
+Origin: Samboryk OS
+Suite: alpha
+MD5Sum:
+ 935adaa6929828c38bbf6d2521562e93             3875 main/binary-amd64/Packages
+ 8a5a18111f130bc5e4738bf822788c1b             1745 main/binary-amd64/Packages.gz
+SHA1:
+ 8e11725ba1e1fdf3df24507d76ff4a2e3838a886             3875 main/binary-amd64/Packages
+ a8e95e988881927e2df47f7b79ffd68d1028941c             1745 main/binary-amd64/Packages.gz
+SHA256:
+ a3d37145c9a320ab2e36401e45fb3d511b6c0d53bcedc843cb07b9a3147b18e2             3875 main/binary-amd64/Packages
+ 54f2f66377cc980ea8f4491d3f89968cd5aae84215ac943797f398927a07a48c             1745 main/binary-amd64/Packages.gz
+SHA512:
+ ef3e81a95d5892cd8e0df4757d4d06ede504fa72eebaec7e3ecf55f76097aec6dd556210b67320f06d23f15a2ff5ea16ad353bd011390d8c6bb4e9d3254617a6             3875 main/binary-amd64/Packages
+ 0436a1a49be23882d146e2913e2685c459df356d060b7504440aa26ec8347c16c58f0d8ea679391ac73519c245106bc73d47ff25e3c36e72f3057aa638fe57e0             1745 main/binary-amd64/Packages.gz

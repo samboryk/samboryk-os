@@ -1,0 +1,90 @@
+Package: samboryk-archive-keyring
+Architecture: all
+Version: 0.1.0~alpha1
+Priority: optional
+Section: misc
+Maintainer: Samboryk OS <noreply@samboryk.invalid>
+Installed-Size: 36
+Filename: pool/alpha/samboryk-archive-keyring_0.1.0~alpha1_all.deb
+Size: 1316
+MD5sum: 2f40b4798788e3530b43ff4a8921def6
+SHA1: 7b282eaf9378555164a9429cab414d1bc87e2008
+SHA256: 8c9e3711b2f91345310516b404c9268eb3fb1a28772ac7a2d71a6eaa991fc7b2
+SHA512: 9e7022f4810592ed42115874ac5978aaf765bd8423d75280aebd2f8dad2665b66b848af8a2a1f88365a09a3c7a6faf805c6e78c407ec0dd2d0a42a72bbc42a0f
+Description: Update channel of Samboryk OS
+ GPG key and APT source of the Samboryk OS update repository.
+
+Package: samboryk-branding
+Architecture: all
+Version: 0.1.0~alpha1
+Priority: optional
+Section: misc
+Maintainer: Samboryk OS <noreply@samboryk.invalid>
+Installed-Size: 184
+Depends: base-files
+Recommends: plymouth
+Filename: pool/alpha/samboryk-branding_0.1.0~alpha1_all.deb
+Size: 31632
+MD5sum: 5a7978c534a681d12140c609fb1520dd
+SHA1: 43781a99d88790838de220e625b784ce7f859f47
+SHA256: 71317a98c199726a59fe5d9686b6c87896134622813ab2d49ba609a1f77a2547
+SHA512: 6132b04ebbf935ea61f2a53c91b1a12faad28fa18d56c6e049074fd1aa44bb406125c5f65fe0945ee213f513f7b450a0a9f22e0dfa37747f61e2cef29c9524cf
+Description: Samboryk OS branding
+ Name, logo, boot screen and system information for Samboryk OS.
+
+Package: samboryk-desktop
+Architecture: all
+Version: 0.1.0~alpha1
+Priority: optional
+Section: metapackages
+Maintainer: Samboryk OS <noreply@samboryk.invalid>
+Installed-Size: 4
+Depends: samboryk-branding (= 0.1.0~alpha1), samboryk-theme (= 0.1.0~alpha1), samboryk-icons (= 0.1.0~alpha1)
+Recommends: samboryk-archive-keyring, kdeconnect, timeshift, gamemode, mangohud, steam-installer, lutris, wine, plasma-discover, plasma-discover-notifier
+Filename: pool/alpha/samboryk-desktop_0.1.0~alpha1_all.deb
+Size: 964
+MD5sum: f13b64ae3bbe55bea0e8e558d61faa01
+SHA1: 862ae1b9f909da33b823ea31e0cb8138050d3a70
+SHA256: bd26f0132d432519abb76f45bf9366822d731324fdc0d3514c18c6a16d439bfb
+SHA512: 5fa044c9fe777fc7bc22b633f2c913a4084239ba14feeaf280870a333881464d11c013f771bb918a1443f35d28a3c1ed144076a5dfd1e78beecd107946888c53
+Description: Samboryk OS desktop
+ Pulls in everything that makes up Samboryk OS: branding, theme, icons,
+ update channel, phone integration, system snapshots and gaming tools
+ (Steam with Proton, Wine, Lutris, GameMode, MangoHud).
+
+Package: samboryk-icons
+Architecture: all
+Version: 0.1.0~alpha1
+Priority: optional
+Section: x11
+Maintainer: Samboryk OS <noreply@samboryk.invalid>
+Installed-Size: 100480
+Filename: pool/alpha/samboryk-icons_0.1.0~alpha1_all.deb
+Size: 4861616
+MD5sum: 1579ffefe161e902921285ba8095b89f
+SHA1: 15d5322497330b7d1216264e17d3c960f238f4fa
+SHA256: 0dda86921662481e7320aed3706d91fba88a1deba8bcf887aae538efb35f8706
+SHA512: e2044edb2698878cb6c61a613f541c2316023b62fedf2493477bc413ecb20cb48230dff13a3fa2e1823438975580abd9292f0e8418dac019bc33305184b6599a
+Description: Icon theme for Samboryk OS
+ WhiteSur icon theme by Vince Liuice (GPL-3.0), packaged for Samboryk OS.
+ Upstream: https://github.com/vinceliuice/WhiteSur-icon-theme
+
+Package: samboryk-theme
+Architecture: all
+Version: 0.1.0~alpha1
+Priority: optional
+Section: x11
+Maintainer: Samboryk OS <noreply@samboryk.invalid>
+Installed-Size: 988
+Depends: samboryk-branding (= 0.1.0~alpha1)
+Recommends: samboryk-icons
+Filename: pool/alpha/samboryk-theme_0.1.0~alpha1_all.deb
+Size: 745948
+MD5sum: d861222d6c00909d811485953ac87d9f
+SHA1: 8f738a0cdfce9f436a2db50e51d26d4df856ae6e
+SHA256: 4cb2d2165736fd72b9f53f2904bc0b633943473de351314f0e68aaa4c2a99bc3
+SHA512: 6213deb875c77840d79109e1486aa0574b3d9cfba6994325fcfad87a46d6294b27eb1232533fe3ccb49d79b7f8cf81bc38945fa99c15ed20c396dbbaf0654f46
+Description: Samboryk OS desktop theme
+ Silver (light) and Graphite (dark) global themes, color schemes,
+ wallpapers, login splash and default panel layout for KDE Plasma.
+
