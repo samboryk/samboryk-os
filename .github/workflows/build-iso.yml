@@ -22,7 +22,7 @@ jobs:
     timeout-minutes: 300
     env:
       CHANNEL: ${{ inputs.channel || 'alpha' }}
-      REPO_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/apt
+      REPO_URL: https://raw.githubusercontent.com/${{ github.repository }}/gh-pages/apt
       HOME_URL: https://github.com/${{ github.repository }}
     steps:
       - uses: actions/checkout@v4

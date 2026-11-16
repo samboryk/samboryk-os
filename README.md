@@ -45,10 +45,9 @@ iso/customize-chroot.sh     що робиться всередині образ�
 
    Ключ створюється один раз. Якщо його загубити, вже встановлені системи перестануть отримувати оновлення.
 3. **Опублікуйте перші пакети:** вкладка **Actions → Оновлення → Run workflow**.
-   Після цього з'явиться гілка `gh-pages`.
-4. **Увімкніть GitHub Pages:** **Settings → Pages → Source: Deploy from a branch → `gh-pages` / `(root)`**.
-   Репозиторій оновлень буде за адресою `https://<ваш-логін>.github.io/samboryk-os/apt`.
-5. **Зберіть ISO:** **Actions → Збірка ISO → Run workflow**. Це займає 1–2 години.
+   Пакети ляжуть у гілку `gh-pages`, і системи братимуть їх звідти за адресою
+   `https://raw.githubusercontent.com/<логін>/samboryk-os/gh-pages/apt` (GitHub Pages вмикати не потрібно).
+4. **Зберіть ISO:** **Actions → Збірка ISO → Run workflow**. Це займає 1–2 години.
    Готовий образ з'явиться в **Releases**, розбитий на частини по 1,9 ГБ
    (GitHub не приймає файли більші за 2 ГБ). Як склеїти — написано в описі релізу.
 
@@ -59,7 +58,7 @@ iso/customize-chroot.sh     що робиться всередині образ�
         ↓
 GitHub Actions збирає пакети й підписує їх ключем
         ↓
-GitHub Pages роздає репозиторій
+GitHub роздає репозиторій з гілки gh-pages
         ↓
 у всіх користувачів Discover показує «Доступні оновлення»
 ```
@@ -86,7 +85,7 @@ samboryk-channel           # показати поточний
 
 ```
 sudo apt install xorriso squashfs-tools apt-utils git curl
-REPO_URL=https://<логін>.github.io/samboryk-os/apt tools/build-debs.sh
+REPO_URL=https://raw.githubusercontent.com/<логін>/samboryk-os/gh-pages/apt tools/build-debs.sh
 sudo -E iso/build-iso.sh
 ```
 Потрібно ~30 ГБ вільного місця. Скрипт сам знайде й завантажить свіжий образ Kubuntu 26.04
